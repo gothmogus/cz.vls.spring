@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+		version="1.0">
+	<persistence-unit name="organizacniJednotka" transaction-type="RESOURCE_LOCAL" >
+		<class>cz.vls.spring.model.oracle.OrganizacniJednotka</class>
+	</persistence-unit>
+	<persistence-unit name="Lide" transaction-type="RESOURCE_LOCAL" >
+		<class>cz.vls.spring.model.oracle.Lide</class>
+	</persistence-unit>
+</persistence>
