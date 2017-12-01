@@ -1,6 +1,7 @@
 package cz.vls.spring.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import cz.tdp.kshield.client.KShieldClient;
 import cz.vls.spring.providers.KeyShieldAuthenticationProvider;
 
 @Configuration
@@ -20,6 +22,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private AuthenticationEntryPoint authEntryPoint;
 	*/
+
+	@Bean
+    public KShieldClient kshieldClient() throws Exception {
+    	return new KShieldClient( "https://swb.vlscr.local:8486" );
+    }
 	
 	@Autowired
     private KeyShieldAuthenticationProvider keyShieldAuthenticationProvider;
@@ -33,9 +40,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
     	http
         .authorizeRequests()
-        .antMatchers("/organization/units").permitAll()
         .antMatchers("/organization/people/**").permitAll()
-        .anyRequest().authenticated();
+        .antMatchers("/organization/units").authenticated().and().httpBasic().disable();
+//        
+        
     }
     
     @Autowired
