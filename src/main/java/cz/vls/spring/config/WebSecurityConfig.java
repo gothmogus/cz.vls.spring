@@ -13,8 +13,8 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 
 import cz.tdp.kshield.client.KShieldClient;
 import cz.vls.spring.filter.KeyShieldPreAuthenticatedProcessingFilter;
-import cz.vls.spring.filter.SOAAuthenticationProvider;
 import cz.vls.spring.providers.KeyShieldAuthenticationProvider;
+import cz.vls.spring.providers.SOAAuthenticationProvider;
 
 @Configuration
 @ComponentScan(basePackages = "cz.vls.spring.providers")
