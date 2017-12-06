@@ -9,8 +9,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
 import cz.tdp.kshield.client.KShieldClient;
+import cz.vls.spring.filter.KeyShieldPreAuthenticatedProcessingFilter;
+import cz.vls.spring.filter.SOAAuthenticationProvider;
 import cz.vls.spring.providers.KeyShieldAuthenticationProvider;
 
 @Configuration
@@ -31,20 +34,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
     private KeyShieldAuthenticationProvider keyShieldAuthenticationProvider;
 	
+	@Autowired
+	private SOAAuthenticationProvider soaAuthenticationProvider; 
+	
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(this.keyShieldAuthenticationProvider);
+        auth.authenticationProvider(this.keyShieldAuthenticationProvider).authenticationProvider(soaAuthenticationProvider);
     }
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    	http
+    	http.addFilterBefore(kshieldFilter(), AbstractPreAuthenticatedProcessingFilter.class)
+        .authenticationProvider(keyShieldAuthenticationProvider).csrf().disable()
+        .authorizeRequests().anyRequest().authenticated();
+    	
+    	/*http
         .authorizeRequests()
         .antMatchers("/organization/people/**").permitAll()
-        .antMatchers("/organization/units").authenticated().and().httpBasic().disable();
+        .antMatchers("/organization/units").authenticated().and().httpBasic().disable();*/
 //        
         
     }
+    
+    @Bean
+    public KeyShieldPreAuthenticatedProcessingFilter kshieldFilter() throws Exception {
+    	KeyShieldPreAuthenticatedProcessingFilter filter = new KeyShieldPreAuthenticatedProcessingFilter();
+    	filter.setAuthenticationManager(authenticationManager());
+    	return filter;
+	}
     
     @Autowired
 	void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
