@@ -27,6 +27,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import cz.vls.spring.model.mssql.User;
 
@@ -43,16 +44,6 @@ public class AppMssqlConfig extends WebMvcConfigurerAdapter {
 	
 	@Autowired
     private Environment env;
-	
-	@Bean
-	public ViewResolver viewResolver() {
-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/WEB-INF/views/");
-		viewResolver.setSuffix(".jsp");
-	
-		return viewResolver;
-	}
 	
 	@Bean
 	@Primary

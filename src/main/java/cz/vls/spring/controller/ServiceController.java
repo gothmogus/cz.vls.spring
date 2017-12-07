@@ -1,27 +1,27 @@
 package cz.vls.spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import cz.vls.spring.model.mssql.Service;
 import cz.vls.spring.repositories.mssql.ServiceRepository;
 
-@RestController
+@Controller
 @RequestMapping(path="/services")
 public class ServiceController {
 	
 	@Autowired
 	private ServiceRepository serviceRepository;
 	
-	@GetMapping(path="/catalogue")
-	public @ResponseBody Iterable<Service> getAllServices() {
+	@RequestMapping(path="/catalogue")
+	public String getAllServices( Model model ) {
 		
-		// This returns a JSON or XML with the userCards
-		return serviceRepository.findAll();
+		Iterable<Service> services = serviceRepository.findAll();
 		
-	}
+        model.addAttribute("services", services);
+        return "catalogue";
+    }
 	
 }

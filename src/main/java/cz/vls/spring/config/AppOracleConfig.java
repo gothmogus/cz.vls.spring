@@ -48,16 +48,6 @@ public class AppOracleConfig extends WebMvcConfigurerAdapter {
     private Environment env;
 	
 	@Bean
-	public ViewResolver viewResolver() {
-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/WEB-INF/views/");
-		viewResolver.setSuffix(".jsp");
-	
-		return viewResolver;
-	}
-	
-	@Bean
     public DataSource oracleDataSource() throws SQLException
     {
         /*EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();

@@ -12,7 +12,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
 	@Override
 	protected Class[] getServletConfigClasses() {
-		return new Class[] { AppMssqlConfig.class, AppOracleConfig.class, WebSecurityConfig.class };
+		return new Class[] { AppMssqlConfig.class, AppOracleConfig.class, WebSecurityConfig.class, ThymeleafConfig.class };
 	}
 
 	@Override
