@@ -46,7 +46,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
     	http.addFilterBefore(kshieldFilter(), AbstractPreAuthenticatedProcessingFilter.class)
         .authenticationProvider(keyShieldAuthenticationProvider).csrf().disable()
-        .authorizeRequests().anyRequest().authenticated();
+        .authorizeRequests()
+        .antMatchers("/alvao/tickets/**").permitAll()
+        .anyRequest().authenticated();
     	
     	/*http
         .authorizeRequests()
