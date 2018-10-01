@@ -1,21 +1,15 @@
 package cz.vls.spring.filter;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.core.GrantedAuthorityDefaults;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
 import cz.tdp.kshield.client.KShieldClient;
 import cz.tdp.kshield.client.KShieldClientException;
 import cz.tdp.kshield.client.UserInfo;
-import cz.vls.spring.services.UserDetailsServiceImpl;
 
 public class KeyShieldPreAuthenticatedProcessingFilter extends AbstractPreAuthenticatedProcessingFilter {
 	
@@ -73,7 +67,7 @@ public class KeyShieldPreAuthenticatedProcessingFilter extends AbstractPreAuthen
 			
 		} catch (KShieldClientException e) {
 			
-			logger.debug( "***** KeyShieldPreAuthenticatedProcessingFilter =>>  EXCEPTION  <<= " + e.getLocalizedMessage() + " *****" );
+			logger.error( "***** KeyShieldPreAuthenticatedProcessingFilter =>>  EXCEPTION  <<= " + e.getLocalizedMessage() + " *****" );
 			
 		}
 		

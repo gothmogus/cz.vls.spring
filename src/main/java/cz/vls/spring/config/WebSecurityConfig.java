@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
     public KShieldClient kshieldClient() throws Exception {
-    	return new KShieldClient( "https://swb.vlscr.local:8486" );
+    	return new KShieldClient( "https://tdp.vls.cz:8486" );
     }
 	
 	@Autowired
@@ -44,11 +44,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+    	
+    	http.csrf().disable().authorizeRequests().anyRequest().permitAll();
+   	
+    	// TODO Gothmog 1.10.2018 - zakomentováno v důsledku změny DNS názvu KeyShield serveru - pokud povolím, chyba certifikátu - nutno přidat do keystore..
+    	/*
     	http.addFilterBefore(kshieldFilter(), AbstractPreAuthenticatedProcessingFilter.class)
         .authenticationProvider(keyShieldAuthenticationProvider).csrf().disable()
         .authorizeRequests()
         .antMatchers("/alvao/tickets/**").permitAll()
         .anyRequest().authenticated();
+        */
     	
     	/*http
         .authorizeRequests()
